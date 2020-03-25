@@ -13,17 +13,16 @@ const MealDetailScreen = props => {
 
     return (
         <ScrollView>
-            <Image/>
-            <View>
-                <DefaultText>{props.duration}m</DefaultText>
-                <DefaultText>{props.complexity.toUpperCase()}</DefaultText>
-                <DefaultText>{props.affordability.toUpperCase()}</DefaultText>
+            <Image source={{uri: selectedMeal.imageUrl}} style={styles.image}/>
+            <View style={styles.details}>
+                <DefaultText>{selectedMeal.duration}m</DefaultText>
+                <DefaultText>{selectedMeal.complexity.toUpperCase()}</DefaultText>
+                <DefaultText>{selectedMeal.affordability.toUpperCase()}</DefaultText>
             </View>
-            <Text style={}>Ingredients</Text>
-            <View style={styles.screen}>
-                <Text>The MealDetails Screen</Text>
-                <Text>{selectedMeal.title}</Text>
-            </View>
+            <Text style={styles.title}>Ingredients</Text>
+            <Text>List of ingredients...</Text>
+            <Text style={styles.title}>Steps</Text>
+            <Text>List of steps...</Text>
         </ScrollView>
     );
 };
@@ -44,10 +43,17 @@ MealDetailScreen.navigationOptions = (navigationData) => {
 };
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+    title: {
+
+    },
+    image:{
+        width: '100%',
+        height: 200
+    },
+    details: {
+        flexDirection: 'row',
+        padding: 15,
+        justifyContent: 'space-around'
     }
 });
 
