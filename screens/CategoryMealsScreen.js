@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button, FlatList} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 
-import {CATEGORIES, MEALS} from "../data/dummy-data";
+import DefaultText from '../components/DefaultText';
+import {CATEGORIES} from "../data/dummy-data";
 import MealList from '../components/MealList';
 
 const CategoryMealsScreen = props => {
@@ -10,9 +12,17 @@ const CategoryMealsScreen = props => {
 
     const catId = props.navigation.getParam('categoryId');
 
-    const selectedCategory = CATEGORIES.find(cat => cat.id === catId);
+    const availableMeals = useSelector(state => state.meals.filteredMeals);
 
-    const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+    const displayedMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+
+    if(displayedMeals.length === 0){
+        return (
+            <View style={styles.content}>
+                <DefaultText>No content found. Check your filters</DefaultText>
+            </View>
+        );
+    }
 
     return (
         <MealList listData={displayedMeals} navigation={props.navigation}/>
@@ -31,6 +41,11 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
 
 const styles = StyleSheet.create({
     screen: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    content: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
